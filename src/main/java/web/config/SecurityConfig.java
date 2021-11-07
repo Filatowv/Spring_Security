@@ -20,6 +20,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication().withUser("ADMIN").password("ADMIN").roles("ADMIN");
     }
 
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/login").hasAnyAuthority("USER","ADMIN")
+//                .antMatchers("/new").hasAnyAuthority("ADMIN")
+//                .antMatchers("/edit/**").hasAnyAuthority("ADMIN")
+//                .antMatchers("/delete/**").hasAuthority("ADMIN")
+//                .anyRequest().authenticated()
+//                .and()
+//                .formLogin().permitAll()
+//                .and()
+//                .logout().permitAll()
+//                .and()
+//                .exceptionHandling().accessDeniedPage("/403")
+//        ;
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
