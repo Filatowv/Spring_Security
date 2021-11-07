@@ -1,6 +1,8 @@
 package web.model;
 
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
+// Этот класс реализует интерфейс GrantedAuthority,
+// в котором необходимо переопределить только один метод getAuthority()
+// (возвращает имя роли).
+// Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
 
 
     @Id
@@ -18,14 +25,14 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;
+    private String role;
 
-
-    public Role(String name) {
-        this.name = name;
-    }
 
     public Role(){}
+
+    public Role(String role) {
+        this.role = role;
+    }
 
     public Integer getId() {
         return id;
@@ -35,19 +42,16 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
-    public String toString() {
-        return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public String getAuthority() {
+        return role;
     }
 }
