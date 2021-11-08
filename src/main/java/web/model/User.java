@@ -34,7 +34,6 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String password;
 
@@ -51,6 +50,13 @@ public class User implements UserDetails {
 
 
     public User(String name, String password, Set<Role> roles) {
+        this.name = name;
+        this.password = password;
+        this.roles = roles;
+    }
+
+    public User(Long id, String name, String password, Set<Role> roles) {
+        this.id = id;
         this.name = name;
         this.password = password;
         this.roles = roles;
@@ -73,31 +79,6 @@ public class User implements UserDetails {
     }
 
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-
-    public void setRoles(String roles){
-        this.roles=new HashSet<>();
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -132,5 +113,31 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+//    public void setRoles(Set<Role> roles) {
+//        this.roles = roles;
+//    }
+
+    public void setRoles(String roles){
+        this.roles=new HashSet<>();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }

@@ -23,8 +23,7 @@ public class Role implements GrantedAuthority {
     @Id
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    private Long id;
     private String role;
 
 
@@ -34,11 +33,17 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public Integer getId() {
+    public Role(Long id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,5 +58,13 @@ public class Role implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return role;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                '}';
     }
 }
