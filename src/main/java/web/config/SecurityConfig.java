@@ -40,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+
         http.formLogin()
                 // указываем страницу с формой логина
 //                .loginPage("/login")
@@ -55,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout()
                 // разрешаем делать логаут всем
-//                .permitAll()
+                .permitAll()
                 // указываем URL логаута
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
                 // указываем URL при удачном логауте
@@ -69,7 +71,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
                 // защищенные URL
-                .antMatchers("/hello").access("hasAnyRole('ADMIN','USER')").anyRequest().authenticated();
+                .antMatchers("/").access("hasAnyRole('ADMIN')")
+                .anyRequest().authenticated();
     }
 
     @Bean

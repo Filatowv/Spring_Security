@@ -1,6 +1,11 @@
 package web.model;
 
 
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -16,7 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -26,6 +31,9 @@ import java.util.Set;
 // как адаптер между БД пользователей и
 // тем что требуется Spring Security внутри SecurityContextHolder
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -35,64 +43,42 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String password;
+    private String passwords;
 
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles;
 
+    public User() {}
 
-    public User(){}
-
+    public User(String name, String passwords) {
+        this.name = name;
+        this.passwords = passwords;
+    }
 
     public User(String name, String password, Set<Role> roles) {
         this.name = name;
-        this.password = password;
+        this.passwords = password;
         this.roles = roles;
     }
-
-    public User(Long id, String name, String password, Set<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
+        return getRoles();
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return getPassword();
     }
 
     @Override
     public String getUsername() {
-        return name;
+        return getName();
     }
 
     @Override
@@ -115,29 +101,16 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-//    public void setRoles(Set<Role> roles) {
-//        this.roles = roles;
-//    }
-
-    public void setRoles(String roles){
-        this.roles=new HashSet<>();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return passwords.equals(user.passwords);
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", roles=" + roles +
-                '}';
+    public int hashCode() {
+        return Objects.hash(passwords);
     }
 }

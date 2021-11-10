@@ -30,7 +30,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
 
-
+//Добавлено для MVC
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
