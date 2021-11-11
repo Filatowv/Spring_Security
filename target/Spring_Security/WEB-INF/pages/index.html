@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8"/>
     <title>User Manager</title>
@@ -16,9 +17,8 @@
             <th>Last Name</th>
             <th>Password</th>
             <th>Role</th>
-<!--            <th>Age</th>-->
-<!--            <th>Price</th>-->
-<!--            <th>Actions</th>-->
+            <th>Management</th>
+
         </tr>
         </thead>
         <tbody>
@@ -26,12 +26,17 @@
             <td th:text="${user.getId()}">User ID</td>
             <td th:text="${user.getName()}">Name</td>
             <td th:text="${user.getPasswords()}">Password</td>
+<!--            <td th:text="${user.getRoles()}">Password</td>-->
 <!--            <td th:text="${user.getRoles()}">Role</td>-->
-            <td>
-                <th:each Role="${user.role}" var="">${role.role}; </th:each>
-            </td>
 
-<!--            <td><a th:href="@{/{id}(id=${user.getId()})}">Info</a></td>-->
+
+
+<!--            <th:each var="roleList" items="${role}">-->
+<!--                <td><th:out value="${role.role}"/></td>-->
+
+            <td>
+                <th:each roleList="${roleList.role}" var="">${role.role}; </th:each>
+            </td>
             <td>
                 <a th:href="@{'/edit/' + ${user.id}}">Edit</a>
                 &nbsp;&nbsp;&nbsp;

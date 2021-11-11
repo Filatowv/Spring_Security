@@ -21,6 +21,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -63,6 +64,18 @@ public class User implements UserDetails {
     public User(String name, String password, Set<Role> roles) {
         this.name = name;
         this.passwords = password;
+        this.roles = roles;
+    }
+//?????
+    public void setRoles(String roles) {
+        this.roles = new HashSet<>();
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

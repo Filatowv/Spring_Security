@@ -29,8 +29,8 @@ public class InitDB {
 
     @PostConstruct
     public void initApiUserData() {
-        Role user = new Role("ROLE_USER");
-        Role admin = new Role("ROLE_ADMIN");
+        Role user = new Role("USER");
+        Role admin = new Role("ADMIN");
 
         Set<Role> roleUser = new HashSet<>();
         Set<Role> roleAdmin = new HashSet<>();
@@ -53,7 +53,7 @@ public class InitDB {
         user2.setPasswords("Olga");
         user2.setRoles(roleAdmin);
 
-        User user3 = new User("Fedya","Ivanov");
+        User user3 = new User("Артур","Ivanov");
         user3.setRoles(roleAdmin);
 
 //        User user2 = new User("Olga","Olga");
