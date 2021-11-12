@@ -13,16 +13,16 @@ import web.model.User;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 
-    private final UserDao userDao;
+    private final UserService userService;
 
-    public UserDetailsServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userDao.getUserByName(userName);
+        User user = userService.getUserByName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("Username not found");
         }

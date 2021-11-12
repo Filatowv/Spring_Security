@@ -4,9 +4,12 @@ package web.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
@@ -20,8 +23,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -35,6 +40,9 @@ import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@ToString
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
@@ -43,46 +51,38 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NonNull
     private String name;
+
+    @NonNull
     private String passwords;
 
 
-    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
-    public User() {}
-
-    public User(String name, String passwords) {
-        this.name = name;
-        this.passwords = passwords;
-    }
-
-    public User(String name, String password, Set<Role> roles) {
-        this.name = name;
-        this.passwords = password;
-        this.roles = roles;
-    }
-//?????
-    public void setRoles(String roles) {
-        this.roles = new HashSet<>();
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+    private Set<Role> roles = new HashSet<>();;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
+
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<Role> roles = getRoles();
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//
+//        for (Role role : roles) {
+//            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+//        }
+//
+//        return authorities;
+//    }
+
 
     @Override
     public String getPassword() {
@@ -119,11 +119,11 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return passwords.equals(user.passwords);
+        return Objects.equals(id, user.id) && name.equals(user.name) && passwords.equals(user.passwords) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(passwords);
+        return Objects.hash(id, name, passwords, roles);
     }
 }

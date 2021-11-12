@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+
         //отображение кирилицы
 //        CharacterEncodingFilter filter = new CharacterEncodingFilter();
 //        filter.setEncoding("UTF-8");
@@ -78,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //страницы аутентификаци доступна всем
                 .antMatchers("/login").anonymous()
                 // защищенные URL
-                .antMatchers("/").access("hasAnyRole('ADMIN','USER')")
+                .antMatchers("/**").access("hasAnyRole('ADMIN','USER')")
                 .anyRequest().authenticated();
     }
 

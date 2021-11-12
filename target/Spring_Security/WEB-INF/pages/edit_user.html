@@ -8,7 +8,7 @@
 <div align="center">
     <h1>Edit User</h1>
     <br />
-    <form action="#" th:action="@{/save}" th:object="${user}"
+    <form action="#" th:action="@{/admin/save}" th:object="${user}"
           method="post">
 
         <table border="0" cellpadding="10">
@@ -25,7 +25,7 @@
                 </td>
             </tr>
             <tr>
-                <td>User:</td>
+                <td>User Passwords:</td>
                 <td><input type="text" th:field="*{passwords}" /></td>
             </tr>
             <tr>

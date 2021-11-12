@@ -1,13 +1,13 @@
 package web.model;
 
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,12 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-// Этот класс реализует интерфейс GrantedAuthority,
-// в котором необходимо переопределить только один метод getAuthority()
-// (возвращает имя роли).
-// Имя роли должно соответствовать шаблону: «ROLE_ИМЯ», например, ROLE_USER.
+
 @Getter
 @Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -31,20 +30,15 @@ public class Role implements GrantedAuthority {
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NonNull
     private String role;
 
-
-    public Role() {}
-
-    public Role(String role) {
-        this.role = role;
-    }
 
     @Override
     public String getAuthority() {
         return role;
     }
-
 
     @Override
     public String toString() {

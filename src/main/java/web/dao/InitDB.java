@@ -34,9 +34,12 @@ public class InitDB {
 
         Set<Role> roleUser = new HashSet<>();
         Set<Role> roleAdmin = new HashSet<>();
+        Set<Role> roleAdminUser = new HashSet<>();
 
         roleUser.add(user);
         roleAdmin.add(admin);
+        roleAdminUser.add(user);
+        roleAdminUser.add(admin);
 
         roleService.addRole(user);
         roleService.addRole(admin);
@@ -48,13 +51,11 @@ public class InitDB {
         user1.setPasswords("Roma");
         user1.setRoles(roleUser);
 
-        User user2 = new User();
-        user2.setName("Olga");
-        user2.setPasswords("Olga");
+        User user2 = new User("Viktor","Viktor");
         user2.setRoles(roleAdmin);
 
         User user3 = new User("Артур","Ivanov");
-        user3.setRoles(roleAdmin);
+        user3.setRoles(roleAdminUser);
 
 //        User user2 = new User("Olga","Olga");
 //        user2.setRoles(roleAdmin);
