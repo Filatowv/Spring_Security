@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Service
-//@Transactional
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserDao userDao;
@@ -23,47 +23,47 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    @Autowired
-    PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Autowired
+//    PasswordEncoder getPasswordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public void addUser(User user) {
-        user.setPasswords(getPasswordEncoder().encode(user.getPasswords()));
+//        user.setPasswords(getPasswordEncoder().encode(user.getPasswords()));
         userDao.addUser(user);
     }
 
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public User getUserById(long id) {
         return userDao.getUserById(id);
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public void updateUser(User user) {
-        if (!user.getPasswords().equals(getUserById(user.getId()).getPasswords())) {
-            user.setPasswords(getPasswordEncoder().encode(user.getPasswords()));
-        }
+//        if (!user.getPasswords().equals(getUserById(user.getId()).getPasswords())) {
+//            user.setPasswords(getPasswordEncoder().encode(user.getPasswords()));
+//        }
         userDao.updateUser(user);
     }
 
     @Override
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     public User getUserByName(String userName) {
         return userDao.getUserByName(userName);
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public void deleteUser(long id) {
         userDao.deleteUser(id);
     }
