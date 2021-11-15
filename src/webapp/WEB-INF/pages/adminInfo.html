@@ -25,11 +25,8 @@
         <tr th:each="user : ${userList}">
             <td th:text="${user.getId()}">User ID</td>
             <td th:text="${user.getName()}">Name</td>
-            <td th:text="${user.getPasswords()}">Password</td>
-<!--            <td th:text="${user.getRoles()}">Password</td>-->
+            <td th:text="${user.getPasswordUser()}">Password</td>
             <td th:text="${user.getRoles()}">Role</td>
-
-
 
 <!--            <th:each var="roleList" items="${role}">-->
 <!--                <td><th:out value="${role.role}"/></td>-->

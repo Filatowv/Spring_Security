@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,8 @@ public class UserController {
 		this.roleService = roleService;
 	}
 
+
+
 	@GetMapping("/user")
 	public String userInfoPage(@AuthenticationPrincipal User user, Model model) {
 		model.addAttribute("user",user);
@@ -46,16 +49,6 @@ public class UserController {
 		return "adminInfo";
 	}
 
-//	//форма пользователя
-//	@GetMapping("admin/new")
-//	public String newUser(User user ,Model model) {
-////		User user = new User();
-//		model.addAttribute("user",user);
-//		model.addAttribute("roles",roleService.getAllRole());
-//		return "newUser";
-//	}
-//
-//
 	//список с новым пользователем
 	@PostMapping(value = "admin/save")
 	public String saveUser(@ModelAttribute("user") User user) {
@@ -70,6 +63,55 @@ public class UserController {
 		model.addAttribute("listRoles",listRoles);
 		return "newUser";
 	}
+
+//	форма редактирования
+	@GetMapping("/admin/edit/{id}")
+	public String edit(@PathVariable("id")long id,Model model) {
+		model.addAttribute("user",userService.getUserById(id));
+		model.addAttribute("role",roleService.getAllRole());
+		return "edit_user";
+	}
+
+	//запрос редактирования
+	@PatchMapping("/admin/{id}")
+	public String update(@ModelAttribute("user") User user) {
+		userService.updateUser(user);
+		return "redirect:/admin";
+	}
+
+//	@RequestMapping("/admin/delete/{id}")
+//	public String deleteProduct(@PathVariable(name = "id") int id) {
+//		userService.deleteUser(id);
+//		return "redirect:/admin";
+//	}
+//
+//	//форма редактирования
+//	@GetMapping("/admin/edit/{id}")
+//	public String edit(Model model,
+//					   @PathVariable("id")long id) {
+//		model.addAttribute("user",userService.getUserById(id));
+//		return "edit_user";
+//	}
+
+//	//запрос редактирования
+//	@PatchMapping("/{id}")
+//	public String update(@ModelAttribute("user") User user) {
+//		userService.updateUser(user);
+//		return "redirect:/admin";
+//	}
+
+
+//	//форма пользователя
+//	@GetMapping("admin/new")
+//	public String newUser(User user ,Model model) {
+////		User user = new User();
+//		model.addAttribute("user",user);
+//		model.addAttribute("roles",roleService.getAllRole());
+//		return "newUser";
+//	}
+//
+//
+
 
 //	//список с новым пользователем
 //	@PostMapping("/create")
@@ -86,35 +128,20 @@ public class UserController {
 
 
 
-
-	@RequestMapping("/admin/edit/{id}")
-	public ModelAndView showEditUser(@PathVariable(name = "id") long id) {
-		ModelAndView maw = new ModelAndView("edit_user");
-		User user = userService.getUserById(id);
-		maw.addObject("user",user);
-
-		return maw;
-	}
-
-//	//форма редактирования
-//	@GetMapping("/admin/edit/{id}")
-//	public String edit(Model model, @PathVariable("id")long id) {
-//		model.addAttribute("user",userService.getUserById(id));
-//		model.addAttribute("role",roleService.getAllRole());
-//		return "edit_user";
+//изменяем модель Стринг(не коллекцию)
+//	@RequestMapping("/admin/edit/{id}")
+//	public ModelAndView showEditUser(@PathVariable(name = "id") long id) {
+//		ModelAndView maw = new ModelAndView("edit_user");
+//		User user = userService.getUserById(id);
+//		maw.addObject("user",user);
+//		return maw;
 //	}
 
-	@RequestMapping("/admin/delete/{id}")
-	public String deleteProduct(@PathVariable(name = "id") int id) {
-		userService.deleteUser(id);
-		return "redirect:/admin";
-	}
-
-
-
-
-
-
+//
+//	@ModelAttribute("roles")
+//	public List<Role> listRole (){
+//		return roleService.getAllRole();
+//	}
 
 //	@GetMapping()
 //	public String getAllUsers(Model model) {

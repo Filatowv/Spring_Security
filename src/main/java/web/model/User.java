@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,37 +57,24 @@ public class User implements UserDetails {
     private String name;
 
     @NonNull
-    private String passwords;
+    private String passwordUser;
 
-
-    @ManyToMany(cascade=CascadeType.MERGE, fetch = FetchType.EAGER)
+//cascade = CascadeType.MERGE,
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();;
+    private Set<Role> roles;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<Role> roles = getRoles();
-//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//
-//        for (Role role : roles) {
-//            authorities.add(new SimpleGrantedAuthority(role.getRole()));
-//        }
-//
-//        return authorities;
-//    }
-
-
     @Override
     public String getPassword() {
-        return getPassword();
+        return getPasswordUser();
     }
 
     @Override
@@ -119,11 +107,26 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && name.equals(user.name) && passwords.equals(user.passwords) && Objects.equals(roles, user.roles);
+        return Objects.equals(id, user.id)
+                && name.equals(user.name)
+                && passwordUser.equals(user.passwordUser)
+                && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, passwords, roles);
+        return Objects.hash(id, name, passwordUser, roles);
     }
+
+    //    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Set<Role> roles = getRoles();
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//
+//        for (Role role : roles) {
+//            authorities.add(new SimpleGrantedAuthority(role.getRole()));
+//        }
+//
+//        return authorities;
+//    }
 }

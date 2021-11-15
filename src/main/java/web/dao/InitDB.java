@@ -48,7 +48,7 @@ public class InitDB {
 
         User user1 = new User();
         user1.setName("Roma");
-        user1.setPasswords("Roma");
+        user1.setPasswordUser("Roma");
         user1.setRoles(roleUser);
 
         User user2 = new User("Viktor","Viktor");
