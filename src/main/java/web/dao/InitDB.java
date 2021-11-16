@@ -51,16 +51,20 @@ public class InitDB {
         user1.setPasswordUser("Roma");
         user1.setRoles(roleUser);
 
-        User user2 = new User("Viktor","Viktor");
-        user2.setRoles(roleAdmin);
+        User user4 = new User();
+        user4.setName("STAS");
+        user4.setPasswordUser("STAS");
+        user4.setRoles(roleAdmin);
 
-        User user3 = new User("Артур","Ivanov");
+        User user2 = new User("Viktor","Viktor");
+        user2.setRoles(roleAdminUser);
+
+        User user3 = new User("Ivanov","Ivanov");
         user3.setRoles(roleAdminUser);
 
-//        User user2 = new User("Olga","Olga");
-//        user2.setRoles(roleAdmin);
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
+        userService.addUser(user4);
     }
 }

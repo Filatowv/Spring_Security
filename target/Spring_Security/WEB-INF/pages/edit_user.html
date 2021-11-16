@@ -23,15 +23,16 @@
                 <td>User Passwords:</td>
                 <td><input type="text" th:field="*{passwordUser}" /></td>
             </tr>
-            <ul>
+
+            <tr>
                 <li th:each="roles : ${role}">
                     <input type="checkbox" name="set_roles"
                            th:field="*{roles}" th:value="${roles}"
                            th:text="${roles}" />
                 </li>
-            </ul>
+            </tr>
             <tr>
-                <td colspan="4"><button type="submit">Edit</button> </td>
+                <td colspan="2"><button type="submit">Edit</button> </td>
             </tr>
         </table>
     </form>

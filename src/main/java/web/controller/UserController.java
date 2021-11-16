@@ -36,12 +36,18 @@ public class UserController {
 
 
 
-	@GetMapping("/user")
-	public String userInfoPage(@AuthenticationPrincipal User user, Model model) {
-		model.addAttribute("user",user);
+//	@GetMapping("/user")
+//	public String userInfoPage(@AuthenticationPrincipal User user, Model model) {
+//		model.addAttribute("user",user);
+//		return "userInfo";
+//	}
+
+	@GetMapping(value = "/user")
+	public String getUserInfo(@AuthenticationPrincipal User user, Model model){
+		model.addAttribute("user", user);
+		model.addAttribute("roles",user.getRoles());
 		return "userInfo";
 	}
-
 
 	@GetMapping(value = "/admin")
 	public String adminInfoPage(Model model) {
@@ -49,19 +55,37 @@ public class UserController {
 		return "adminInfo";
 	}
 
-	//список с новым пользователем
-	@PostMapping(value = "admin/save")
-	public String saveUser(@ModelAttribute("user") User user) {
-		userService.addUser(user);
-		return "redirect:/admin";
+//	//список с новым пользователем
+//	@PostMapping(value = "admin/save")
+//	public String saveUser(@ModelAttribute("user") User user) {
+//		userService.addUser(user);
+//		return "redirect:/admin";
+//	}
+//
+//	//форма нового пользователя
+//	@GetMapping("admin/new")
+//	public String newUser(@ModelAttribute("user") User user, Model model) {
+//		List<Role> listRoles = roleService.getAllRole();
+//		model.addAttribute("listRoles",listRoles);
+//		return "newUser";
+//	}
+
+	@GetMapping(value = "/admin/new")
+	public String newUser(Model model) {
+		model.addAttribute("user", new User());
+		model.addAttribute("roles", roleService.getAllRole());
+		return "new";
 	}
 
-	//форма нового пользователя
-	@GetMapping("admin/new")
-	public String newUser(@ModelAttribute("user") User user, Model model) {
-		List<Role> listRoles = roleService.getAllRole();
-		model.addAttribute("listRoles",listRoles);
-		return "newUser";
+	@PostMapping(value = "/admin/add")
+	private String addUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+		Set<Role> roles = new HashSet<>();
+		for (String role : checkBoxRoles) {
+			roles.add(roleService.getRoleByName(role));
+		}
+		user.setRoles(roles);
+		userService.addUser(user);
+		return "redirect:/admin";
 	}
 
 //	форма редактирования
@@ -79,11 +103,11 @@ public class UserController {
 		return "redirect:/admin";
 	}
 
-//	@RequestMapping("/admin/delete/{id}")
-//	public String deleteProduct(@PathVariable(name = "id") int id) {
-//		userService.deleteUser(id);
-//		return "redirect:/admin";
-//	}
+	@RequestMapping("/admin/delete/{id}")
+	public String deleteProduct(@PathVariable(name = "id") int id) {
+		userService.deleteUser(id);
+		return "redirect:/admin";
+	}
 //
 //	//форма редактирования
 //	@GetMapping("/admin/edit/{id}")
