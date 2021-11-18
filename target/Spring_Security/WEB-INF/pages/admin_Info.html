@@ -11,6 +11,7 @@
     <a href="/admin/new">Create New Users</a>
     <br/><br/>
     <table border="1" cellpadding="10">
+
         <thead>
         <tr>
             <th>User ID</th>
@@ -18,9 +19,9 @@
             <th>Password</th>
             <th>Role</th>
             <th>Management</th>
-
         </tr>
         </thead>
+
         <tbody>
         <tr th:each="user : ${userList}">
             <td th:text="${user.getId()}">User ID</td>
@@ -28,17 +29,12 @@
             <td th:text="${user.getPasswordUser()}">Password</td>
             <td th:text="${user.getRoles()}">Role</td>
 
-<!--            <th:each var="roleList" items="${role}">-->
-<!--                <td><th:out value="${role.role}"/></td>-->
-
-<!--            <td>-->
-<!--                <th:each roleList="${roleList.role}" var="">${role.role}; </th:each>-->
-<!--            </td>-->
             <td>
                 <a th:href="@{'/admin/edit/' + ${user.id}}">Edit</a>
                 &nbsp;&nbsp;&nbsp;
                 <a th:href="@{'/admin/delete/' + ${user.id}}">Delete</a>
             </td>
+
         </tr>
         </tbody>
     </table>

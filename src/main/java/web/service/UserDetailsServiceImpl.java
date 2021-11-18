@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import web.dao.UserDao;
 import web.model.User;
 
 
@@ -19,6 +18,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
+
+    // «Пользователь» – это просто Object. В большинстве случаев он может быть
+    //  приведен к классу UserDetails.
+    // Для создания UserDetails используется интерфейс UserDetailsService, с единственным методом:
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

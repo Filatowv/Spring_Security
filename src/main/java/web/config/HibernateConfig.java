@@ -22,12 +22,15 @@ import java.util.Properties;
 @PropertySource("classpath:db.properties")
 public class HibernateConfig {
 
+
     private final Environment env;
+
 
     @Autowired
     public HibernateConfig(Environment env) {
         this.env = env;
     }
+
 
     @Bean
     public DataSource dataSource() {

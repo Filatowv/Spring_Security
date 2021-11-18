@@ -59,7 +59,6 @@ public class User implements UserDetails {
     @NonNull
     private String passwordUser;
 
-//cascade = CascadeType.MERGE,
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -118,15 +117,4 @@ public class User implements UserDetails {
         return Objects.hash(id, name, passwordUser, roles);
     }
 
-    //    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Set<Role> roles = getRoles();
-//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//
-//        for (Role role : roles) {
-//            authorities.add(new SimpleGrantedAuthority(role.getRole()));
-//        }
-//
-//        return authorities;
-//    }
 }

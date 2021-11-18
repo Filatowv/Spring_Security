@@ -11,10 +11,6 @@
     <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
 
         <table border="0" cellpadding="10">
-<!--            <tr>-->
-<!--                <td>User ID:</td>-->
-<!--                <td><input type="text" th:field="*{id}" readonly="readonly" /></td>-->
-<!--            </tr>-->
             <tr>
                 <td>User Name:</td>
                 <td><input type="text" th:field="*{name}" /></td>
@@ -31,6 +27,7 @@
                            th:text="${roles}" />
                 </li>
             </tr>
+
             <tr>
                 <td colspan="2"><button type="submit">Edit</button> </td>
             </tr>

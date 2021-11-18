@@ -2,7 +2,6 @@ package web.dao;
 
 import org.springframework.stereotype.Repository;
 import web.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -14,9 +13,10 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("select u from User u", User.class).getResultList();
+        return entityManager.createQuery("select user from User user", User.class).getResultList();
     }
 
     @Override
@@ -46,7 +46,4 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("userName", name)
                 .getSingleResult();
     }
-
-//    @Query("SELECT u FROM User u WHERE u.username = :username")
-//    public User getUserByUsername(@Param("username") String username);
 }

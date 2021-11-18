@@ -21,14 +21,17 @@ public class InitDB {
     private final UserService userService;
     private final RoleService roleService;
 
+
     @Autowired
     public InitDB(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
 
+
     @PostConstruct
     public void initApiUserData() {
+
         Role user = new Role("USER");
         Role admin = new Role("ADMIN");
 
@@ -45,21 +48,16 @@ public class InitDB {
         roleService.addRole(admin);
 
 
-
-        User user1 = new User();
-        user1.setName("Roma");
-        user1.setPasswordUser("Roma");
+        User user1 = new User("Roma","Roma");
         user1.setRoles(roleUser);
 
-        User user4 = new User();
-        user4.setName("STAS");
-        user4.setPasswordUser("STAS");
+        User user4 = new User("Stas","Stas");
         user4.setRoles(roleAdmin);
 
         User user2 = new User("Viktor","Viktor");
         user2.setRoles(roleAdminUser);
 
-        User user3 = new User("Ivanov","Ivanov");
+        User user3 = new User("Ivan","Ivan");
         user3.setRoles(roleAdminUser);
 
         userService.addUser(user1);

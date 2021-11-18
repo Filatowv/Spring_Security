@@ -16,7 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +24,6 @@ import javax.persistence.Table;
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
 
-
     @Id
     @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +31,6 @@ public class Role implements GrantedAuthority {
 
     @NonNull
     private String role;
-
 
     @Override
     public String getAuthority() {

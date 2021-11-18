@@ -6,6 +6,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+
     // Метод, указывающий на класс конфигурации
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -13,6 +15,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
                 HibernateConfig.class
         };
     }
+
 
     // Добавление конфигурации, в которой инициализируем ViewResolver, для корректного отображения jsp.
     @Override
@@ -30,7 +33,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
 
-//Добавлено для MVC
+//Добавлено из MVC для работы с PATCH, DELETE
     @Override
     public void onStartup(ServletContext aServletContext) throws ServletException {
         super.onStartup(aServletContext);
