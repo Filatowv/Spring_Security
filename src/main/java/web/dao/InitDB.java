@@ -2,13 +2,10 @@ package web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import web.model.Role;
 import web.model.User;
 import web.service.RoleService;
 import web.service.UserService;
-
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;

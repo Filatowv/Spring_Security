@@ -24,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final LoginSuccessHandler successHandler; // класс, в котором описана логика перенаправления пользователей по ролям
 
 
+    // указываем какую реализацию мы используем @Qualifier
     @Autowired
     public SecurityConfig(@Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
                           LoginSuccessHandler successHandler) {
