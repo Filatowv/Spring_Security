@@ -53,7 +53,10 @@ public class User implements UserDetails {
     @NonNull
     private String passwordUser;
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    //fetch - когда загружать дочерние объекты, чтения связанных объектов из БД
+    //cascade - будет либо учитываться связь между сущностями для выполнения операции, либо нет
+    //@JoinTable, которая определяет таблицу и поля для связи
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
