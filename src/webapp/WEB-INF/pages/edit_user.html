@@ -21,11 +21,13 @@
             </tr>
 
             <tr>
-                <li th:each="roles : ${role}">
-                    <input type="checkbox" name="set_roles"
-                           th:field="*{roles}" th:value="${roles}"
-                           th:text="${roles}" />
-                </li>
+                <td>USER</td>
+                <td> <input type="checkbox" value="USER" th:name="checkBoxRoles"/></td>
+            </tr>
+
+            <tr>
+                <td>ADMIN</td>
+                <td> <input  type="checkbox" value="ADMIN" th:name="checkBoxRoles"/></td>
             </tr>
 
             <tr>

@@ -82,13 +82,24 @@ public class UserController {
 	}
 
 
+//	//запрос редактирования
+//	@PatchMapping("/admin/{id}")
+//	public String update(@ModelAttribute("user") User user) {
+//		userService.updateUser(user);
+//		return "redirect:/admin";
+//	}
+
 	//запрос редактирования
-	@PatchMapping("/admin/{id}")
-	public String update(@ModelAttribute("user") User user) {
+	@PatchMapping(value = "/admin/{id}")
+	public String updateUser(@ModelAttribute User user, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+		Set<Role> roles = new HashSet<>();
+		for (String role : checkBoxRoles) {
+			roles.add(roleService.getRoleByName(role));
+		}
+		user.setRoles(roles);
 		userService.updateUser(user);
 		return "redirect:/admin";
 	}
-
 
 	// удаление
 	@RequestMapping("/admin/delete/{id}")
